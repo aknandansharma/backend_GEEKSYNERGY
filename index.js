@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 import morgan from "morgan";
 import connectDB from "./config/db.js";
+import bodyParser from "body-parser";
 import userRoutes from "./routers/userRoutes.js"
 
 

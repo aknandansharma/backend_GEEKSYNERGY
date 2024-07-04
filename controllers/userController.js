@@ -93,8 +93,8 @@ export const loginUser = async (req, res) => {
 // get All users
 export const getAllUsers = async (req, res) => {
     try {
-      const users = await User.find();
-      res.json(users);
+        const users = await User.find();
+        res.json(users);
     } catch (error) {
         console.log(error);
         res.status(500).send({
@@ -107,17 +107,16 @@ export const getAllUsers = async (req, res) => {
 // get All users
 export const updateUser = async (req, res) => {
     try {
-        const { id, name, phone, profession } = req.body;
-        const user = await User.findById(id);
-        if (!user) {
-          return res.status(404).json({ message: 'User not found' });
-        }
+        const { id } = req.params;
+        const { name, phone, profession } = req.body;
 
-        user.name = name;
-        user.phone = phone;
-        user.profession = profession;
+        let user = await User.findById(id);
+        if (!user) return res.status(404).json({ msg: 'User not found' });
+
+        user.name = name || user.name;
+        user.phone = phone || user.phone;
+        user.profession = profession || user.profession;
         await user.save();
-    
         res.json(user);
     } catch (error) {
         console.log(error);
@@ -130,6 +129,8 @@ export const updateUser = async (req, res) => {
   //  delete user
 export const deleteUser = async (req, res) => {
     try {
+        const { id } = req.params;
+    
         const user = await User.findById(req.params.id);
         if (!user) {
           return res.status(404).json({ msg: 'User not found' });
