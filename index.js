@@ -6,6 +6,7 @@ import morgan from "morgan";
 import connectDB from "./config/db.js";
 import bodyParser from "body-parser";
 import userRoutes from "./routers/userRoutes.js"
+import doctorRoutes from "./routers/doctorRouter.js"
 
 
 
@@ -31,6 +32,7 @@ app.use(bodyParser.json());
 
 // routes
 app.use('/api/v1/auth', userRoutes)
+app.use('/api/v1/auth', doctorRoutes)
 
 // rest api check on the web.
 app.get("/", (req, res) => {

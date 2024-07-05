@@ -130,14 +130,18 @@ export const updateUser = async (req, res) => {
 export const deleteUser = async (req, res) => {
     try {
         const { id } = req.params;
-    
-        const user = await User.findById(req.params.id);
-        if (!user) {
-          return res.status(404).json({ msg: 'User not found' });
+
+        if (!id) {
+            return res.status(400).json({ message: "User ID is required." });
         }
-    
+
+        const user = await User.findById(id);
+        if (!user) {
+            return res.status(404).json({ message: "User not found." });
+        }
+
         await user.remove();
-        res.json({ message: 'User removed' });
+        res.json({ message: "User removed successfully." });
       } catch (error) {
         console.log(error);
         res.status(500).send({
